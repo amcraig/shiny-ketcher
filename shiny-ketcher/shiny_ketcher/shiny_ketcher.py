@@ -1,7 +1,6 @@
 from pathlib import PurePath
 
 from htmltools import HTMLDependency, Tag
-
 from shiny.module import resolve_id
 from shiny.render.renderer import Jsonifiable, Renderer
 
@@ -16,10 +15,11 @@ shiny_ketcher_deps = HTMLDependency(
         "subdir": str(PurePath(__file__).parent / "distjs"),
     },
     script={"src": "index.js", "type": "module"},
+    stylesheet={"href": "index.css"},
 )
 
 
-def input_shiny_ketcher(id: str):
+def input_shiny_ketcher(tag_id: str = "ketcher"):
     """
     A shiny input.
     """
@@ -28,7 +28,7 @@ def input_shiny_ketcher(id: str):
         "shiny-ketcher-input",
         shiny_ketcher_deps,
         # Use resolve_id so that our component will work in a module
-        id=resolve_id(id),
+        id=resolve_id(tag_id),
     )
 
 
@@ -57,12 +57,12 @@ class render_shiny_ketcher(Renderer[str]):
         return {"value": str(value)}
 
 
-def output_shiny_ketcher(id: str):
+def output_shiny_ketcher(tag_id: str):
     """
     Show a color
     """
     return Tag(
         "shiny-ketcher-output",
         shiny_ketcher_deps,
-        id=resolve_id(id),
+        id=resolve_id(tag_id),
     )
