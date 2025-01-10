@@ -1,7 +1,7 @@
 {
   "name": "shiny-ketcher-pkg",
   "version": "1.0.0",
-  "description": "Ketcher React output binding and message handlers for Shiny-Py.",
+  "description": "Ketcher React output binding and message handlers for Shiny for Python.",
   "main": "index.js",
   "scripts": {
     "build": "esbuild srcts/index.tsx --bundle --define:process.env={} --define:global=window --outfile=shiny_ketcher/distjs/index.js",
