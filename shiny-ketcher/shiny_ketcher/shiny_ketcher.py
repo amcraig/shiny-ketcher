@@ -1,6 +1,7 @@
 from pathlib import PurePath
 
 from htmltools import HTMLDependency, Tag
+from shiny import ui
 from shiny.module import resolve_id
 from shiny.render.renderer import Jsonifiable, Renderer
 
@@ -19,7 +20,7 @@ shiny_ketcher_deps = HTMLDependency(
 )
 
 
-def input_shiny_ketcher(tag_id: str = "ketcher"):
+def input_ketcher(tag_id: str):
     """
     A shiny input.
     """
@@ -33,14 +34,14 @@ def input_shiny_ketcher(tag_id: str = "ketcher"):
 
 
 # Output component
-class render_shiny_ketcher(Renderer[str]):
+class render_ketcher(Renderer[str]):
     """
     Render a value in a custom component.
     """
 
     # The UI used within Shiny Express mode
     def auto_output_ui(self) -> Tag:
-        return output_shiny_ketcher(self.output_id)
+        return output_ketcher(self.output_id)
 
     # # There are no parameters being supplied to the `output_shiny_ketcher` rendering function.
     # # Therefore, we can omit the `__init__()` method.
@@ -57,7 +58,7 @@ class render_shiny_ketcher(Renderer[str]):
         return {"value": str(value)}
 
 
-def output_shiny_ketcher(tag_id: str):
+def output_ketcher(tag_id: str):
     """
     Show a color
     """
@@ -65,4 +66,38 @@ def output_shiny_ketcher(tag_id: str):
         "shiny-ketcher-output",
         shiny_ketcher_deps,
         id=resolve_id(tag_id),
+    )
+
+
+def ketcher_message_handlers():
+    return ui.tags.script(
+        """
+        $(function() {
+            Shiny.addCustomMessageHandler("get_smiles", function(message) {
+                console.log("get_smiles");
+                window.ketcher.getSmiles().then(smiles => {
+                    console.log(smiles);
+                    Shiny.setInputValue('smiles', smiles);
+                })
+            });
+        });
+        $(function() {
+            Shiny.addCustomMessageHandler("get_molfile", function(message) {
+                console.log("get_molfile");
+                window.ketcher.getMolfile(molfileFormat="v3000").then(molfile => {
+                    console.log(molfile);
+                    Shiny.setInputValue('molfile', molfile);
+                })
+            });
+        });
+        $(function() {
+            Shiny.addCustomMessageHandler("get_svg", function(message) {
+                window.ketcher.getMolfile(molfileFormat="v3000").then(molfile => {
+                    window.ketcher.generateImage(molfile, options={outputFormat:"svg"}).then(
+                        s => s.text()
+                    ).then( t => Shiny.setInputValue('svg', t));
+                })
+            });
+        });
+        """
     )

@@ -1,11 +1,11 @@
 from .shiny_ketcher import (
-    input_shiny_ketcher,
-    output_shiny_ketcher,
-    render_shiny_ketcher,
+    ketcher_message_handlers,
+    output_ketcher,
+    render_ketcher,
 )
 
 __all__ = [
-    "input_shiny_ketcher",
-    "output_shiny_ketcher",
-    "render_shiny_ketcher",
+    "output_ketcher",
+    "render_ketcher",
+    "ketcher_message_handlers",
 ]
