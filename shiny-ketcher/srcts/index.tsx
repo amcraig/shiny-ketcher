@@ -10,20 +10,6 @@ import {
 
 const structServiceProvider = new StandaloneStructServiceProvider()
 
-// Generates a new input binding that renders the supplied react component
-// into the root of the webcomponent.
-// makeReactInput({
-//   name: "shiny-ketcher-input",
-//   selector: "shiny-ketcher-input",
-//   initialValue: "",
-//   renderComp: ({ initialValue, updateValue }) => (
-//     <KetcherReact
-//       initialValue={initialValue}
-//       updateValue={(value) => updateValue(value)}
-//     />
-//   )
-// });
-
 // KetcherReact component
 function KetcherReact({
   struct

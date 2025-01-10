@@ -56,8 +56,3 @@ If you want to run the example app from the command line you can run:
 ```
 Shiny run example-app/app.py
 ```
-
-shiny_ketcher
-shiny_ketcher
-shiny-ketcher
-Shinyshiny_ketcher

@@ -20,23 +20,10 @@ shiny_ketcher_deps = HTMLDependency(
 )
 
 
-def input_ketcher(tag_id: str):
-    """
-    A shiny input.
-    """
-    return Tag(
-        # This is the name of the custom tag we created with our webcomponent
-        "shiny-ketcher-input",
-        shiny_ketcher_deps,
-        # Use resolve_id so that our component will work in a module
-        id=resolve_id(tag_id),
-    )
-
-
 # Output component
 class render_ketcher(Renderer[str]):
     """
-    Render a value in a custom component.
+    Render a string-based structure representation into the Ketcher component.
     """
 
     # The UI used within Shiny Express mode
@@ -60,7 +47,7 @@ class render_ketcher(Renderer[str]):
 
 def output_ketcher(tag_id: str):
     """
-    Show a color
+    Show the Ketcher output component
     """
     return Tag(
         "shiny-ketcher-output",
@@ -70,6 +57,9 @@ def output_ketcher(tag_id: str):
 
 
 def ketcher_message_handlers():
+    """
+    Adds the message handlers to allow users to fetch data from the Ketcher component on-call.
+    """
     return ui.tags.script(
         """
         $(function() {
